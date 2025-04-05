@@ -2,11 +2,13 @@
 
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from lostfound import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),  # Home will be login_required
+    path('', views.home, name='home'),  
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.logout_view, name='logout'),
@@ -16,4 +18,4 @@ urlpatterns = [
     path('items/found/', views.found_items, name='found_items'),
     path('chatbot/', views.chatbot_view, name='chatbot'),
     path('chatbot-ui/', views.chatbot_page, name='chatbot'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

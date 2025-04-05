@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html>
 <head>
     <title>KLH Lost & Found - Home</title>
@@ -16,5 +16,96 @@
     <button onclick="window.location.href='{% url 'found_items' %}'">View Found Items</button><br><br>
 
     <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+
+    <p><a href="{% url 'chatbot' %}">🤖 Talk to our AI Assistant</a></p>
+
+</body>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KLH Lost & Found - Home</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #333333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to KLH Lost & Found</h2>
+        <p>Current Time (IST): {{ current_time|date:"Y-m-d H:i:s" }}</p> <!-- Display Indian time -->
+
+        <!-- Navigation Buttons -->
+        <button onclick="window.location.href='{% url 'add_item' %}'">Report Lost/Found Item</button>
+        <button onclick="window.location.href='{% url 'item_list' %}'">View All Items</button>
+        <button onclick="window.location.href='{% url 'lost_items' %}'">View Lost Items</button>
+        <button onclick="window.location.href='{% url 'found_items' %}'">View Found Items</button>
+        <button class="logout-button" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+
+        <p><a href="{% url 'chatbot' %}">🤖 Talk to our AI Assistant</a></p>
+    </div>
 </body>
 </html>
+

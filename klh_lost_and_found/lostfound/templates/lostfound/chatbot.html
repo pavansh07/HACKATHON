@@ -1,0 +1,222 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot - Lost & Found</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        #chatbox { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; margin-bottom: 10px; }
+        .user { color: blue; font-weight: bold; }
+        .bot { color: green; }
+    </style>
+</head>
+<body>
+    <h2>🤖 AI Chatbot Assistant</h2>
+    <div id="chatbox"></div>
+    <input type="text" id="message" placeholder="Ask anything..." style="width: 70%;">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function appendMessage(sender, text) {
+            const chatbox = document.getElementById('chatbox');
+            const message = document.createElement('div');
+            message.className = sender;
+            message.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chatbox.appendChild(message);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const msg = document.getElementById('message').value;
+            if (!msg) return;
+
+            appendMessage('User', msg);
+            document.getElementById('message').value = '';
+
+            const response = await fetch('/chatbot/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg })
+            });
+
+            const data = await response.json();
+            if (data.reply) {
+                appendMessage('Bot', data.reply);
+            } else {
+                appendMessage('Bot', 'Sorry, something went wrong.');
+            }
+        }
+    </script>
+</body>
+</html> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot - Lost & Found</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #chatbox {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .user, .bot {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            max-width: 80%;
+            display: inline-block;
+            clear: both;
+        }
+
+        .user {
+            background-color: #e6f0ff;
+            color: #004085;
+            font-weight: bold;
+            float: right;
+            text-align: right;
+        }
+
+        .bot {
+            background-color: #e9fbe7;
+            color: #155724;
+            float: left;
+        }
+
+        #input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #message {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .back-button a {
+            text-decoration: none;
+            color: white;
+            background-color: #6c757d;
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        .back-button a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🤖 AI Chatbot Assistant</h2>
+        <div id="chatbox" class="clearfix"></div>
+
+        <div id="input-area">
+            <input type="text" id="message" placeholder="Ask anything...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <div class="back-button">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        function appendMessage(sender, text) {
+            const chatbox = document.getElementById('chatbox');
+            const message = document.createElement('div');
+            message.className = sender.toLowerCase();
+            message.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chatbox.appendChild(message);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const msgInput = document.getElementById('message');
+            const msg = msgInput.value.trim();
+            if (!msg) return;
+
+            appendMessage('User', msg);
+            msgInput.value = '';
+
+            try {
+                const response = await fetch('/chatbot/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+
+                const data = await response.json();
+                if (data.reply) {
+                    appendMessage('Bot', data.reply);
+                } else {
+                    appendMessage('Bot', 'Sorry, something went wrong.');
+                }
+            } catch (error) {
+                appendMessage('Bot', 'Error connecting to the chatbot service.');
+            }
+        }
+    </script>
+</body>
+</html>
