@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KLH Lost & Found - Home</title>
+</head>
+<body>
+    <h2>Welcome to KLH Lost & Found</h2>
+
+    <!-- Navigation Buttons -->
+    <button onclick="window.location.href='{% url 'add_item' %}'">Report Lost/Found Item</button><br><br>
+
+    <button onclick="window.location.href='{% url 'item_list' %}'">View All Items</button><br><br>
+
+    <button onclick="window.location.href='{% url 'lost_items' %}'">View Lost Items</button><br><br>
+
+    <button onclick="window.location.href='{% url 'found_items' %}'">View Found Items</button><br><br>
+
+    <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+</body>
+</html>

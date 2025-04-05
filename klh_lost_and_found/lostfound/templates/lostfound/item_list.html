@@ -1,0 +1,18 @@
+<h2>Lost & Found Items</h2>
+<ul>
+    {% for item in items %}
+        <li>
+            <strong>{{ item.title }}</strong> - {{ item.status|title }} <br>
+            {{ item.description }}<br>
+            Location: {{ item.location }}<br>
+            Reported by: {{ item.reported_by.username }} on {{ item.date_reported|date:"Y-m-d H:i" }}
+        </li>
+        <hr>
+    {% empty %}
+        <li>No items reported yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'home' %}">
+    <button>Back to Home</button>
+</a>
